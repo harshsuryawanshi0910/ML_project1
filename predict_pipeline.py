@@ -2,10 +2,6 @@ import pandas as pd
 import numpy as np
 import pickle
 import os
-import sys
-
-# Add parent directory to path to import from src
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class CustomData:
     def __init__(self, 
@@ -43,18 +39,14 @@ class CustomData:
 
 class PredictPipeline:
     def __init__(self):
-        # Get the project root directory (2 levels up from this file)
+        # Get the current directory
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(os.path.dirname(current_dir))
-        
-        self.model_path = os.path.join(project_root, 'artifacts', 'model.pkl')
-        self.preprocessor_path = os.path.join(project_root, 'artifacts', 'preprocessor.pkl')
-        
-        print(f"Project root: {project_root}")
-        print(f"Model path: {self.model_path}")
+        self.model_path = os.path.join(current_dir, 'artifacts', 'model.pkl')
+        self.preprocessor_path = os.path.join(current_dir, 'artifacts', 'preprocessor.pkl')
         
     def load_model(self):
         try:
+            print(f"Loading model from: {self.model_path}")
             with open(self.model_path, 'rb') as f:
                 model = pickle.load(f)
             return model
@@ -67,6 +59,7 @@ class PredictPipeline:
     
     def load_preprocessor(self):
         try:
+            print(f"Loading preprocessor from: {self.preprocessor_path}")
             with open(self.preprocessor_path, 'rb') as f:
                 preprocessor = pickle.load(f)
             return preprocessor
