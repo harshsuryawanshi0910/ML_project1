@@ -30,6 +30,7 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict_datapoint():
     try:
+        
         # Get form data
         gender = request.form.get('gender')
         race_ethnicity = request.form.get('race_ethnicity')
@@ -41,6 +42,7 @@ def predict_datapoint():
         
         print(f"Received data: gender={gender}, race={race_ethnicity}")
         
+       
         # Create CustomData object
         data = CustomData(
             gender=gender,
